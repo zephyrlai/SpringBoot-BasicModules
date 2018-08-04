@@ -59,21 +59,13 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 5px;">
-            <!-- 子页面Title -->
+            <!-- 子页面Title（就是Tab） -->
             <div class="layui-tab layui-tab-brief" lay-allowclose="true" lay-filter="nav-filter">
                 <ul id="tab-title" class="layui-tab-title" >
-                    <!--<li class="layui-this">网站设置</li>
-                    <li>用户管理</li>
-                    <li>权限分配</li>
-                    <li>商品管理</li>
-                    <li>订单管理</li>-->
+
                 </ul>
                 <div id="tab-content" class="layui-tab-content">
-                    <!--<div class="layui-tab-item layui-show"><button class="layui-btn opt-newTab">按钮01</button></div>
-                    <div class="layui-tab-item"><button class="layui-btn layui-btn-normal">按钮02</button></div>
-                    <div class="layui-tab-item"><button class="layui-btn layui-btn-danger">按钮03</button></div>
-                    <div class="layui-tab-item"><button class="layui-btn layui-btn-disabled">按钮04</button></div>
-                    <div class="layui-tab-item"><button class="layui-btn layui-btn-primary">按钮05</button></div>-->
+
                 </div>
             </div>
         </div>
@@ -84,43 +76,9 @@
         © zephyrLai.com
     </div>
 </div>
+
 <script src="/layui/layui.js"></script>
-<script>
-    //JavaScript代码区域
-    layui.use(['element','jquery','layer'], function(){
-        var element = layui.element,
-            $ =layui.jquery;
-        $(".opt-newTab").click(function(){
-            var funcName = $(this).text();
-            // layer.msg(funcName);
-            var switchFlag = false;
-            $("#tab-title li").each(function () {
-                $("this").remove();
-                var tabName = $(this).attr("lay-id");
-                if(tabName != undefined){
-                    if(tabName == funcName){
-                        switchFlag = true;
-                        element.tabChange('nav-filter', $(this).attr("lay-id"));
-                    }
-                }
+<script src="/base/js/func.js"></script>
 
-            })
-            if(!switchFlag){
-                element.tabAdd('nav-filter', {
-                    title: funcName
-                    ,content: '<h1>'+funcName+'</h1>' //支持传入html
-                    ,id: funcName
-                });
-                element.tabChange('nav-filter', funcName);
-            }
-        });
-    });
-
-
-</script>
-<script type="text/javascript">
-
-
-</script>
 </body>
 </html>
