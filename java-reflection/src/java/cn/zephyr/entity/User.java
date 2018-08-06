@@ -7,10 +7,15 @@ package cn.zephyr.entity;
  * @author: Lai
  * @date 2018/8/6 10:40
  */
-public class User {
+public class User<T> {
     private Long id;
     private String name;
     private Integer age;
+    private T t;
+
+    public class Account<K>{
+        private K account;
+    }
 
     public Long getId() {
         return id;
@@ -36,6 +41,15 @@ public class User {
 
     public User setAge(Integer age) {
         this.age = age;
+        return this;
+    }
+
+    public T getT() {
+        return t;
+    }
+
+    public User<T> setT(T t) {
+        this.t = t;
         return this;
     }
 }
