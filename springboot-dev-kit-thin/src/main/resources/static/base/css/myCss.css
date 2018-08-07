@@ -1,0 +1,23 @@
+.my-layui-footer{
+    position:fixed;
+    left:200px;
+    right:0;
+    bottom:0;
+    height:44px;
+    line-height:44px;
+    padding:0 15px;
+}
+
+.my-layui-body {
+    position: absolute;
+    left: 200px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 998;
+    width: auto;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color:#f2f2f2;
+    overflow-y: scroll;/*表格横向滚动*/
+}

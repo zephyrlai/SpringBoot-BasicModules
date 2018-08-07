@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>后端脚手架 - Layui</title>
     <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/base/css/myCss.css">
 </head>
 <body class="layui-layout-body">
 
@@ -35,28 +36,22 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">01管理</a>
+                    <a href="javascript:;">学生管理</a>
                     <dl class="layui-nav-child">
-                        <dd class="opt-newTab"> <a href="javascript:;">01功能一</a></dd>
-                        <dd class="opt-newTab"> <a href="javascript:;">01功能二</a></dd>
-                        <dd class="opt-newTab"> <a href="javascript:;">01功能三</a></dd>
+                        <dd class="opt-newTab"> <a href="javascript:;">基本信息管理</a></dd>
+                        <dd class="opt-newTab"> <a href="javascript:;">奖惩情况管理</a></dd>
+                        <dd class="opt-newTab"> <a href="javascript:;">学籍档案管理</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">02管理</a>
-                    <dl class="layui-nav-child">
-                        <dd class="opt-newTab"><a href="javascript:;">02功能一</a></dd>
-                        <dd class="opt-newTab"><a href="javascript:;">02功能二</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item"><a href="">03管理</a></li>
-                <li class="layui-nav-item"><a href="">其他管理</a></li>
+                <li class="layui-nav-item"><a href="">教师管理</a></li>
+                <li class="layui-nav-item"><a href="">系统管理</a></li>
+                <li class="layui-nav-item"><a href="">代码生成</a></li>
             </ul>
         </div>
     </div>
 
 
-    <div class="layui-body">
+    <div class="layui-body my-layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 5px;">
             <!-- 子页面Title（就是Tab） -->

@@ -1,5 +1,7 @@
 package cn.zephyr.module.controller;
 
+import cn.zephyr.common.result.PageResultBean;
+import cn.zephyr.framework.dao.Page;
 import cn.zephyr.module.biz.student.StudentService;
 import cn.zephyr.module.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +25,10 @@ public class StudentController {
     @RequestMapping("getById")
     public Student getById(Integer id){
         return studentService.getById(id);
+    }
+
+    @RequestMapping("getList4Page")
+    public PageResultBean<Student> getList4Page(Student student,Page page){
+        return studentService.getList4Page(student,page);
     }
 }

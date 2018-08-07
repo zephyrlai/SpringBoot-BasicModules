@@ -1,9 +1,9 @@
 //layui模块的定义
 layui.define(['jquery'],function(exports){
     var sysFunction = {
-        tabFunc : function (element,funcName) {
+        tabFunc : function (element,funcName,tabContent) {
                 var $ = layui.jquery;
-                layer.msg(funcName);
+                // layer.msg
                 console.log(funcName);
                 var switchFlag = false;
                 $("#tab-title li").each(function () {
@@ -17,9 +17,10 @@ layui.define(['jquery'],function(exports){
                     }
                 })
                 if(!switchFlag){
+                    var content = $.ajax({url:tabContent,async:false}).responseText;
                     element.tabAdd('nav-filter', {
                         title: funcName
-                        ,content: '<h1>'+funcName+'</h1>' //支持传入html
+                        ,content: content //支持传入html
                         ,id: funcName
                     });
                     element.tabChange('nav-filter', funcName);

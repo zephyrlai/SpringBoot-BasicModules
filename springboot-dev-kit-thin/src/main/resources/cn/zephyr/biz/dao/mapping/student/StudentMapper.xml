@@ -16,4 +16,42 @@
       where
         id = #{id}
     </select>
+
+    <select id="queryList" parameterType="cn.zephyr.module.entity.Student"
+            resultType="cn.zephyr.module.entity.Student">
+        select
+            id,
+            name,
+            age,
+            gender,
+            class as clazz,
+            grade,
+            create_time as createTime,
+            update_time as updateTime
+        from
+          student
+    </select>
+
+    <select id="queryListCount" resultType="java.lang.Integer">
+        select
+          count(1)
+        from
+          student
+    </select>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into student (name,age,gender,
+        class,grade,create_time,update_time)
+        value
+        <foreach collection="students" item="item" index="index" separator=",">
+            (
+            #{item.name},
+            #{item.age},
+            #{item.gender},
+            #{item.clazz},
+            #{item.grade},
+            #{item.createTime},
+            #{item.updateTime})
+        </foreach>
+    </insert>
 </mapper>

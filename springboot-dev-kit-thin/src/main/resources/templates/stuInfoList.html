@@ -1,0 +1,84 @@
+<div class="layui-row layui-col-space10">
+    <div class="layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                数据检索
+            </div>
+            <div class="layui-card-body">
+
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                数据展示
+            </div>
+            <div class="layui-card-body">
+                <table id="stuInfoTable"></table>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    layui.use(['element','jquery','layer','table'], function(){
+        var table = layui.table;
+        var $ = layui.jquery;
+
+        //第一个实例
+        table.render({
+            elem: '#stuInfoTable'
+            ,height: 490
+            ,url: '/student/getList4Page' //数据接口
+            ,even: true
+            ,cellMinWidth: 100
+            ,request:{
+                pageName:'currentPage'
+                ,limitName:'pageSize'
+            }
+            ,response: {
+                statusName: 'code' //数据状态的字段名称，默认：code
+                ,statusCode: 200 //成功的状态码，默认：0
+                ,msgName: 'msg' //状态信息的字段名称，默认：msg
+                ,countName: 'count' //数据总数的字段名称，默认：count
+                ,dataName: 'data' //数据列表的字段名称，默认：data
+            }
+            ,page: true //开启分页
+            ,cols: [
+                [ //表头
+                 {field: 'id', title: 'ID', /*sort: true, fixed: 'left'*/}
+                ,{field: 'name', title: '用户名', }
+                ,{field: 'age', title: '年龄', }
+                ,{field: 'gender', title: '性别',}
+                ,{field: 'grade', title: '年级', }
+                ,{field: 'clazz', title: '班级',}
+                ,{field: 'createTime',title: '创建时间' }
+                ,{field: 'updateTime',title: '更新时间'}
+                ,{field:'opt', title:'操作', width:180, fixed:'right', toolbar: '#opt-btn', unresize: true}
+            ]
+            ]
+        });
+
+        $(document).on('click', 'button', function() {
+            layer.msg($(this).attr('value'));
+        })
+
+        $(document).on('mouseenter', 'button', function(){
+            layer.tips($(this).attr('value'), $(this), {time: 1000,tips:1});
+        });
+    });
+</script>
+
+<script type="text/html" id="opt-btn">
+    <button class="layui-btn layui-btn layui-btn-sm" value="查看">
+        <i class="layui-icon">&#xe615;</i>
+    </button>
+    <button class="layui-btn layui-btn-normal layui-btn-sm" value="编辑">
+        <i class="layui-icon">&#xe642;</i>
+    </button>
+    <button class="layui-btn layui-btn-danger layui-btn-sm" value="删除">
+        <i class="layui-icon">&#xe640;</i>
+    </button>
+</script>

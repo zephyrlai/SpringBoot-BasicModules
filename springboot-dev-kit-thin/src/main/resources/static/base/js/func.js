@@ -9,6 +9,6 @@ layui.use(['element','jquery','layer','sysFunction'], function(){
         $ =layui.jquery,
         sysFunction = layui.sysFunction;
     $(".opt-newTab").click(function(){
-        sysFunction.tabFunc(element,$(this).text());
+        sysFunction.tabFunc(element,$(this).text(),'/student/toInfo');
     });
 });
