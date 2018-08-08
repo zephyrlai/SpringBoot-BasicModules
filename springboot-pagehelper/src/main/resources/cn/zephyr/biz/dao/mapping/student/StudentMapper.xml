@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.zephyr.entity.Student" >
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="cn.zephyr.entity.Student">
+      select
+          id,
+          name,
+          age,
+          gender,
+          class as clazz,
+          grade,
+          create_time as createTime,
+          update_time as updateTime
+      from
+        student
+      where
+        id = #{id}
+    </select>
+
+    <select id="queryList" parameterType="cn.zephyr.entity.Student"
+            resultType="cn.zephyr.entity.Student">
+        select
+            id,
+            name,
+            age,
+            gender,
+            class as clazz,
+            grade,
+            create_time as createTime,
+            update_time as updateTime
+        from
+          student
+    </select>
+
+</mapper>
