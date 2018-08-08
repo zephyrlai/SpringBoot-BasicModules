@@ -62,11 +62,13 @@
         });
 
         $(document).on('click', 'button', function() {
-            layer.msg($(this).attr('value'));
+            if($(this).attr('value') != undefined)
+                layer.msg($(this).attr('value'));
         })
 
         $(document).on('mouseenter', 'button', function(){
-            layer.tips($(this).attr('value'), $(this), {time: 1000,tips:1});
+            if($(this).attr('value') != undefined)
+                layer.tips($(this).attr('value'), $(this), {time: 1000,tips:1});
         });
     });
 </script>

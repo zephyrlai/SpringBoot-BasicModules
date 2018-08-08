@@ -9,6 +9,9 @@ layui.use(['element','jquery','layer','sysFunction'], function(){
         $ =layui.jquery,
         sysFunction = layui.sysFunction;
     $(".opt-newTab").click(function(){
-        sysFunction.tabFunc(element,$(this).text(),'/student/toInfo');
+        if($(this).attr('url') == undefined)
+            layer.msg($(this).text()+"仍在开发中")
+        else
+            sysFunction.tabFunc(element,$(this).text(),$(this).attr('url'));
     });
 });
