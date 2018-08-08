@@ -23,4 +23,10 @@ public class StudentMvcController {
         modelAndView.setViewName("stuInfoList.html");
         return modelAndView;
     }
+    @RequestMapping(value = "/toAdd",method = RequestMethod.GET)
+    public ModelAndView toAdd(Model model){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("stuInfoMod");
+        return modelAndView;
+    }
 }

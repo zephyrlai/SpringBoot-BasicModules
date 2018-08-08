@@ -1,4 +1,4 @@
-<div class="layui-row layui-col-space10">
+<div id="content-body" class="layui-row layui-col-space10">
     <div class="layui-col-md12">
         <div class="layui-card">
             <div class="layui-card-header">
@@ -12,7 +12,14 @@
     <div class="layui-col-md12">
         <div class="layui-card">
             <div class="layui-card-header">
-                数据展示
+                <div class="layui-row">
+                    <div class="layui-col-md11">
+                        数据展示
+                    </div>
+                    <div class="layui-col-md1">
+                        <button id="add" class="layui-btn layui-btn-normal" value = "新增" ><i class="layui-icon">&#xe608;</i> 新增</button>
+                    </div>
+                </div>
             </div>
             <div class="layui-card-body">
                 <table id="stuInfoTable"></table>
@@ -23,17 +30,18 @@
     </div>
 </div>
 <script type="text/javascript">
-    layui.use(['element','jquery','layer','table'], function(){
+    layui.use(['element','jquery','layer','table','form'], function(){
         var table = layui.table;
         var $ = layui.jquery;
-
+        var form = layui.form;
+        var element = layui.element;
         //第一个实例
         table.render({
             elem: '#stuInfoTable'
             ,height: 490
             ,url: '/student/getList4Page' //数据接口
             ,even: true
-            ,cellMinWidth: 100
+            ,cellMinWidth: 150
             ,request:{
                 pageName:'currentPage'
                 ,limitName:'pageSize'
@@ -56,19 +64,25 @@
                 ,{field: 'clazz', title: '班级',}
                 ,{field: 'createTime',title: '创建时间' }
                 ,{field: 'updateTime',title: '更新时间'}
-                ,{field:'opt', title:'操作', width:180, fixed:'right', toolbar: '#opt-btn', unresize: true}
+                ,{field:'opt', title:'操作', width:160, fixed:'right', templet: '#opt-btn'}
             ]
             ]
         });
 
-        $(document).on('click', 'button', function() {
+       /* $(document).on('click', 'button', function() {
             if($(this).attr('value') != undefined)
                 layer.msg($(this).attr('value'));
-        })
+        })*/
 
         $(document).on('mouseenter', 'button', function(){
             if($(this).attr('value') != undefined)
                 layer.tips($(this).attr('value'), $(this), {time: 1000,tips:1});
+        });
+
+        $("#add").on("click",function () {
+            $("#content-body").empty();
+            $("#content-body").append($.ajax({url:'/student/toAdd',async:false}).responseText);
+            form.render();
         });
     });
 </script>
