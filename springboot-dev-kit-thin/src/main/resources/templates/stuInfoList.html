@@ -12,11 +12,11 @@
     <div class="layui-col-md12">
         <div class="layui-card">
             <div class="layui-card-header">
-                <div class="layui-row">
-                    <div class="layui-col-md11">
+                <div class="layui-row layui-col-space5">
+                    <div class="layui-col-md2">
                         数据展示
                     </div>
-                    <div class="layui-col-md1">
+                    <div class="layui-col-md1 layui-col-md-offset9">
                         <button id="add" class="layui-btn layui-btn-normal" value = "新增" ><i class="layui-icon">&#xe608;</i> 新增</button>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
             ,height: 490
             ,url: '/student/getList4Page' //数据接口
             ,even: true
-            ,cellMinWidth: 150
+            /*,cellMinWidth: 150*/
             ,request:{
                 pageName:'currentPage'
                 ,limitName:'pageSize'
@@ -56,15 +56,15 @@
             ,page: true //开启分页
             ,cols: [
                 [ //表头
-                 {field: 'id', title: 'ID', /*sort: true, fixed: 'left'*/}
-                ,{field: 'name', title: '用户名', }
-                ,{field: 'age', title: '年龄', }
-                ,{field: 'gender', title: '性别',}
-                ,{field: 'grade', title: '年级', }
-                ,{field: 'clazz', title: '班级',}
-                ,{field: 'createTime',title: '创建时间' }
-                ,{field: 'updateTime',title: '更新时间'}
-                ,{field:'opt', title:'操作', width:160, fixed:'right', templet: '#opt-btn'}
+                 {field: 'id', title: 'ID', width:200/*sort: true, fixed: 'left'*/}
+                ,{field: 'name', title: '用户名', width:200}
+                ,{field: 'age', title: '年龄', width:200}
+                ,{field: 'gender', title: '性别',width:200}
+                ,{field: 'grade', title: '年级', width:200}
+                ,{field: 'clazz', title: '班级',width:200}
+                ,{field: 'createTime',title: '创建时间',width:200}
+                ,{field: 'updateTime',title: '更新时间',width:200}
+                ,{field:'opt', title:'操作', width:200, fixed:'right', templet: '#opt-btn'}
             ]
             ]
         });

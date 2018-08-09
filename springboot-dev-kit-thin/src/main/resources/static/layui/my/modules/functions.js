@@ -7,7 +7,7 @@ layui.define(['jquery'],function(exports){
                 console.log(funcName);
                 var switchFlag = false;
                 $("#tab-title li").each(function () {
-                    $("this").remove();
+                    // $("this").remove();
                     var tabName = $(this).attr("lay-id");
                     if(tabName != undefined){
                         if(tabName == funcName){
