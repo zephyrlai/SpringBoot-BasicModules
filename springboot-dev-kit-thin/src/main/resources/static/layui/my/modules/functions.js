@@ -25,6 +25,12 @@ layui.define(['jquery'],function(exports){
                     });
                     element.tabChange('nav-filter', funcName);
                 }
+        },
+
+        // 获取后端controller接口返回的html文件的代码，通常用法：$("xxx").append(getHtmlCode("/xxx/xxxx"));
+        getHtmlCode : function (url) {
+            var $ = layui.jquery;
+            return $.ajax({url:url,async:false}).responseText;
         }
     }
 

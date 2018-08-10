@@ -1,6 +1,7 @@
 package cn.zephyr.module.biz.student.impl;
 
 import cn.zephyr.common.result.PageResultBean;
+import cn.zephyr.common.result.ResultBean;
 import cn.zephyr.framework.dao.BaseService;
 import cn.zephyr.framework.dao.Page;
 import cn.zephyr.module.biz.student.StudentService;
@@ -29,6 +30,13 @@ public class StudentServiceImpl extends BaseService<Student,Integer> implements 
     public PageResultBean<Student> getList4Page(Student student, Page page) {
         List<Student> studentList = dao.executeListMethod(student, "queryList", page, "queryListCount", Student.class);
         return PageResultBean.querySucc(page.getTotalRows(),studentList);
+    }
+
+    @Override
+    public ResultBean<Boolean> insert(Student student) {
+        if(dao.executeInsertMethod(student,"insertSelective")>0)
+            return ResultBean.querySuccess(true);
+        return ResultBean.querySuccess(false);
     }
 
     private void genStudentData(){

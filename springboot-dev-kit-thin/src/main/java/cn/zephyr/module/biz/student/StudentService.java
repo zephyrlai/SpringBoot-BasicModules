@@ -1,6 +1,7 @@
 package cn.zephyr.module.biz.student;
 
 import cn.zephyr.common.result.PageResultBean;
+import cn.zephyr.common.result.ResultBean;
 import cn.zephyr.framework.dao.Page;
 import cn.zephyr.module.entity.Student;
 
@@ -18,4 +19,6 @@ public interface StudentService {
     Student getById(Integer id);
 
     PageResultBean<Student> getList4Page(Student student, Page page);
+
+    ResultBean<Boolean> insert(Student student);
 }

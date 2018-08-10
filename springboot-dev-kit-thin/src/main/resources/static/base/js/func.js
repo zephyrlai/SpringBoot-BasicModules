@@ -21,6 +21,7 @@ layui.use(['element','jquery','layer','sysFunction'], function(){
         if($(this).attr('url') == undefined)
             layer.msg($(this).text()+"仍在开发中")
         else
-        sysFunction.tabFunc(element,$(this).text(),$(this).attr('url'));
+            sysFunction.tabFunc(element,$(this).text(),$(this).attr('url'));
     });
+
 });

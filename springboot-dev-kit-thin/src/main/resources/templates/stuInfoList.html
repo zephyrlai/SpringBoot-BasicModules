@@ -13,12 +13,13 @@
         <div class="layui-card">
             <div class="layui-card-header">
                 <div class="layui-row layui-col-space5">
-                    <div class="layui-col-md2">
                         数据展示
-                    </div>
-                    <div class="layui-col-md1 layui-col-md-offset9">
-                        <button id="add" class="layui-btn layui-btn-normal" value = "新增" ><i class="layui-icon">&#xe608;</i> 新增</button>
-                    </div>
+                    <button id="btn-add" class="layui-btn layui-btn-normal"
+
+                            style="float:right;margin: 3px" value="新增">
+                        <i class="layui-icon">&#xe608;</i>
+                        新增
+                    </button>
                 </div>
             </div>
             <div class="layui-card-body">
@@ -30,10 +31,11 @@
     </div>
 </div>
 <script type="text/javascript">
-    layui.use(['element','jquery','layer','table','form'], function(){
+    layui.use(['element','jquery','layer','table','form','sysFunction'], function(){
         var table = layui.table;
         var $ = layui.jquery;
         var form = layui.form;
+        var sysFunction = layui.sysFunction;
         var element = layui.element;
         //第一个实例
         table.render({
@@ -69,19 +71,19 @@
             ]
         });
 
-       /* $(document).on('click', 'button', function() {
+      /*  $(document).on('click', 'button', function() {
             if($(this).attr('value') != undefined)
                 layer.msg($(this).attr('value'));
-        })*/
+        });*/
 
-        $(document).on('mouseenter', 'button', function(){
+        /*$(document).on('mouseenter', 'button', function(){
             if($(this).attr('value') != undefined)
                 layer.tips($(this).attr('value'), $(this), {time: 1000,tips:1});
-        });
+        });*/
 
-        $("#add").on("click",function () {
+        $("#btn-add").on("click",function () {
             $("#content-body").empty();
-            $("#content-body").append($.ajax({url:'/student/toAdd',async:false}).responseText);
+            $("#content-body").append(sysFunction.getHtmlCode('/student/toAdd'));
             form.render();
         });
     });

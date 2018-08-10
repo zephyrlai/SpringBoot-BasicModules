@@ -31,4 +31,6 @@ public class StudentController {
     public PageResultBean<Student> getList4Page(Student student,Page page){
         return studentService.getList4Page(student,page);
     }
+
+
 }

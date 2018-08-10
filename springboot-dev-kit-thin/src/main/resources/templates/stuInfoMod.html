@@ -4,65 +4,66 @@
         <div class="layui-card">
             <div class="layui-card-header">
                 学生信息新增
+                <button id="btn-return" class="layui-btn layui-btn"
+                        url="/student/toInfo"
+                        style="float:right;margin: 3px"
+                        value="返回">
+                    <i class="layui-icon">&#xe65c</i>
+                    返回
+                </button>
             </div>
             <div class="layui-card-body">
-                <form class="layui-form" action="">
+                <form class="layui-form" id="addForm" method="post" action="/student/add">
                     <div class="layui-form-item">
-                        <label class="layui-form-label">输入框</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">密码框</label>
+                        <label class="layui-form-label">姓名</label>
                         <div class="layui-input-inline">
-                            <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                            <input type="text" name="name" required  lay-verify="required" placeholder="学生姓名" autocomplete="off" class="layui-input">
                         </div>
-                        <div class="layui-form-mid layui-word-aux">辅助文字</div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">选择框</label>
+                        <label class="layui-form-label">年龄</label>
+                        <div class="layui-input-inline">
+                            <input type="number" name="age" required lay-verify="required" placeholder="年龄" autocomplete="off" class="layui-input">
+                        </div>
+                        <!--<div class="layui-form-mid layui-word-aux">辅助文字</div>-->
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">性别</label>
                         <div class="layui-input-block">
-                            <select name="city" lay-verify="required">
-                                <option value=""></option>
-                                <option value="0">北京</option>
-                                <option value="1">上海</option>
-                                <option value="2">广州</option>
-                                <option value="3">深圳</option>
-                                <option value="4">杭州</option>
+                            <input type="radio" name="gender" value="M" title="男" checked>
+                            <input type="radio" name="gender" value="F" title="女">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">入学时间</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" id="checkInTime" placeholder="入学时间">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">年级</label>
+                        <div class="layui-input-inline">
+                            <select name="grade" lay-verify="required">
+                                <option value="">--请选择--</option>
+                                <option value="1">一年级</option>
+                                <option value="2">二年级</option>
+                                <option value="3">三年级</option>
+                                <option value="4">四年级</option>
+                                <option value="5">五年级</option>
+                                <option value="6">六年级</option>
                             </select>
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">复选框</label>
-                        <div class="layui-input-block">
-                            <input type="checkbox" name="like[write]" title="写作">
-                            <input type="checkbox" name="like[read]" title="阅读" checked>
-                            <input type="checkbox" name="like[dai]" title="发呆">
+                        <label class="layui-form-label">班级</label>
+                        <div class="layui-input-inline">
+                            <input type="number" name="clazz" required lay-verify="required" placeholder="班级" autocomplete="off" class="layui-input">
                         </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">开关</label>
-                        <div class="layui-input-block">
-                            <input type="checkbox" name="switch" lay-skin="switch">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">单选框</label>
-                        <div class="layui-input-block">
-                            <input type="radio" name="sex" value="男" title="男">
-                            <input type="radio" name="sex" value="女" title="女" checked>
-                        </div>
-                    </div>
-                    <div class="layui-form-item layui-form-text">
-                        <label class="layui-form-label">文本域</label>
-                        <div class="layui-input-block">
-                            <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
-                        </div>
+                        <!--<div class="layui-form-mid layui-word-aux">辅助文字</div>-->
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-block">
-                            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                            <button id="sub-btn" class="layui-btn" lay-filter="formDemo">确定</button>
                             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                         </div>
                     </div>
@@ -72,10 +73,41 @@
     </div>
 </div>
 <script type="text/javascript">
-    layui.use(['element','jquery','layer','table'], function(){
-        var table = layui.table;
+    layui.use(['element','jquery','layer','sysFunction','laydate'], function(){
         var $ = layui.jquery;
+        var sysFunction = layui.sysFunction;
+        var laydate = layui.laydate;
 
+        $("#btn-return").on("click",function () {
+                $(".layui-show").empty();
+                $(".layui-show").append(sysFunction.getHtmlCode("/student/toInfo"));
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#checkInTime' //指定元素
+            ,format: 'yyyy年MM月dd日'
+        });
+        $("#sub-btn").on('click', function(data){
+            $.ajax({
+                url:'/student/add',
+                method:'post',
+                data:$("#addForm").serialize(),
+                async:false,
+                dataType:'JSON',
+                success:function(res){
+                    if(res.result){
+                        $(".layui-show").empty();
+                        $(".layui-show").append(sysFunction.getHtmlCode("/student/toInfo"));
+                    }
+                    else
+                        alert("fail");
+                },
+                error:function(data){
+
+                }
+            });
+        });
 
     });
 </script>
