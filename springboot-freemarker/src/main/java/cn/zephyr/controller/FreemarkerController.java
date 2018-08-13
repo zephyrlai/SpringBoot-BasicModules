@@ -78,8 +78,4 @@ public class FreemarkerController {
         model.addAttribute("nullKey",null);
         return "freemarker/demo";
     }
-
-    public Boolean genFile(){
-        return false;
-    }
 }
