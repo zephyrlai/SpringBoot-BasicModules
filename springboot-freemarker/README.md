@@ -65,7 +65,7 @@
         ```
 1. 使用Freemarker动态渲染演示  
     主要有如下几种类型的使用：String、Object、Map、List（包括取下标）、时间格式化、null判断；   
-    1. String类型  
+    1. **String类型**   
         Java代码：
         ``` java
         @RequestMapping("string/{name}")
@@ -74,8 +74,8 @@
             return "freemarker/demo";
         }
         ```  
-        效果图： 
-    1. 对象类型  
+        效果图： ![String类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-string.png)  
+    1. **对象类型**  
         Java代码：  
         新增Person类：  
         ``` java 
@@ -99,8 +99,8 @@
             Hello World! --Name:${person.name}
         </body>
         ```
-         效果图：
-    1. List类型：  
+         效果图：![对象类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-obj.png)  
+    1. **List类型**  
         Java代码：
         ``` java
         @RequestMapping("list")
@@ -123,8 +123,8 @@
             </#list>
         </body>
         ```
-        效果图：  
-    1. Map类型：  
+        效果图：  ![List类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-list.png)  
+    1. **Map类型**：  
         Java代码：  
         ``` java
         @RequestMapping("map")
@@ -150,8 +150,8 @@
             </#list>
         </body>
         ```
-        效果图：  
-    1. 时间格式：  
+        效果图：![Map类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-map.png)  
+    1. **时间格式**：  
         Java代码：  
         ``` java
         @RequestMapping("date")
@@ -167,8 +167,8 @@
         <h1>日期+时间：${date?datetime}</h1>
         <h1>自定义时间格式：${date?string("yyyy-MM/dd HH:mm:ss")}</h1>
         ```
-        效果图：  
-    1. null判断
+        效果图：  ![Date类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-date.png)  
+    1. **null判断**  
         Java代码：
         ``` java
         @RequestMapping("null")
@@ -184,6 +184,6 @@
         <h1>null：${nullKey!}(相当于${nullKey!""})</h1>
         <h1>wasd：${wasd!"abcdefg"}</h1>
         ```
-        效果图：  
+        效果图：  ![Null类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-null.png)  
 
 ### 三、使用Freemarker生成实体文件
