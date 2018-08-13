@@ -1,12 +1,12 @@
 package cn.zephyr.controller;
 
+import cn.zephyr.entity.Person;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Title: SpringBoot-BasicModules
@@ -35,8 +35,47 @@ public class FreemarkerController {
      * @return
      */
     @RequestMapping("string/{name}")
-    public String demo(@PathVariable String name, Model model){
+    public String fmString(@PathVariable String name, Model model){
         model.addAttribute("name",name);
+        return "freemarker/demo";
+    }
+
+    @RequestMapping("obj")
+    public String fmObj( Model model){
+        model.addAttribute("person",new Person(1,"tony"));
+        return "freemarker/demo";
+    }
+
+    @RequestMapping("list")
+    public String fmList( Model model){
+        List<Person> personList = new ArrayList<>();
+        for (int i = 0; i < 10; ) {
+            personList.add(new Person(i+10,"张三"+ ++i));
+        }
+        model.addAttribute("personList",personList);
+        return "freemarker/demo";
+    }
+
+    @RequestMapping("map")
+    public String fmMap( Model model){
+        Map<String,Person> personMap = new HashMap<>();
+        for (int i = 0; i < 10; ) {
+            personMap.put("key"+i,new Person(i+10,"张三"+ ++i));
+        }
+        model.addAttribute("personMap",personMap);
+        return "freemarker/demo";
+    }
+
+    @RequestMapping("date")
+    public String fmDate( Model model){
+        model.addAttribute("date",new Date());
+        return "freemarker/demo";
+    }
+
+    @RequestMapping("null")
+    public String fmNull( Model model){
+        model.addAttribute("notNullKey","haha");
+        model.addAttribute("nullKey",null);
         return "freemarker/demo";
     }
 
