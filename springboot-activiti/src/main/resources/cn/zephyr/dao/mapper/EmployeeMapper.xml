@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.zephyr.module.entity.Employee" >
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="cn.zephyr.module.entity.Employee">
+        select
+            id,
+            name,
+            age,
+            gender,
+            age,
+            job,
+            create_time as createTime,
+            update_time as updateTime,
+            remarks
+        from
+            employee
+        where
+            id = #{id}
+    </select>
+</mapper>
