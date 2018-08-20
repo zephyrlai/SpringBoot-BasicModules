@@ -16,6 +16,15 @@ spring:
     content-type: text/html
     mode: LEGACYHTML5
     check-template-location: true
+  # activiti default configuration
+  activiti:
+    database-schema-update: true
+    check-process-definitions: false
+    process-definition-location-prefix: classpath:processes/
+    #    process-definition-location-suffixes:
+    #      - **.bpmn
+    #      - **.bpmn20.xml
+    history-level: full
 
 mybatis:
   type-aliases-package: cn.zephyr.module.entity
@@ -28,3 +37,4 @@ logging:
       zephyr:
         module:
           entity: debug
+

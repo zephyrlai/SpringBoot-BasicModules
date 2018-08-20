@@ -14,7 +14,7 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @GetMapping("/getById")
+    @RequestMapping("/getById")
     public Employee getById(Integer id){
         return employeeService.getById(id);
     }
