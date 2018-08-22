@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<book>
+    <id>1234567</id>
+    <name>Java从入门到放弃</name>
+    <price>0.01</price>
+    <languages>
+        <language>简体中文</language>
+        <language>English</language>
+    </languages>
+</book>
