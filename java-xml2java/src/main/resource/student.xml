@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <student>
     <id>112233</id>
-    <name>haha</name>
+    <name>哈哈</name>
     <age>21</age>
+    <enterDate>2018-08-23 09:54:30</enterDate>
 </student>

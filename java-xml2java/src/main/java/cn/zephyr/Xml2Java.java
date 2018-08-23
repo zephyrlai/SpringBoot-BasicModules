@@ -7,12 +7,13 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
+import java.util.Date;
 
 public class Xml2Java {
     public static void main(String[] args) {
         try {
-            System.err.println(quickStart());
-//            System.err.println(xml2Java());
+//            System.err.println(quickStart());
+           System.err.println(xml2Java());
 //            System.err.println(java2Xml("student.xml"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,7 +67,7 @@ public class Xml2Java {
      * @throws Exception
      */
     public static Boolean java2Xml(String fileName) throws Exception{
-        Student student = new Student(112233L,"haha",21);
+        Student student = new Student(112233L,"哈哈",21,new Date());
         File file = new File(System.getProperty("user.dir")+"/java-xml2java/src/main/resource/"+fileName);
         JAXBContext jaxbContext = JAXBContext.newInstance(Student.class);
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
