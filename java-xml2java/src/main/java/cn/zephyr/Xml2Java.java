@@ -6,15 +6,14 @@ import cn.zephyr.entity.Student;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.StringReader;
+import java.io.*;
 
 public class Xml2Java {
     public static void main(String[] args) {
         try {
-            System.err.println(getFromXml());
+            System.err.println(quickStart());
+//            System.err.println(xml2Java());
+//            System.err.println(java2Xml("student.xml"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -27,7 +26,7 @@ public class Xml2Java {
      * @return
      * @throws Exception
      */
-    private static Student getByString() throws Exception{
+    public static Student quickStart() throws Exception{
         JAXBContext context = JAXBContext.newInstance(Student.class);
 
         Marshaller marshaller = context.createMarshaller();
@@ -42,7 +41,13 @@ public class Xml2Java {
         return (Student) unmarshaller.unmarshal(new StringReader(xml));
     }
 
-    private static Book getFromXml() throws Exception{
+    /**
+     * 从xml文件中读取数据（包括List）到Java对象
+     * 涉及注解：@XmlRootElement、@XmlElementWrapper
+     * @return
+     * @throws Exception
+     */
+    public static Book xml2Java() throws Exception{
         JAXBContext context = JAXBContext.newInstance(Book.class);
 
         Marshaller marshaller = context.createMarshaller();
@@ -54,6 +59,21 @@ public class Xml2Java {
         return (Book)unmarshaller.unmarshal(new StringReader(xml));
     }
 
+    /**
+     * 将Java对象写入到xml文件
+     * 涉及注解：
+     * @return
+     * @throws Exception
+     */
+    public static Boolean java2Xml(String fileName) throws Exception{
+        Student student = new Student(112233L,"haha",21);
+        File file = new File(System.getProperty("user.dir")+"/java-xml2java/src/main/resource/"+fileName);
+        JAXBContext jaxbContext = JAXBContext.newInstance(Student.class);
+        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        jaxbMarshaller.marshal(student , file);
+        return true;
+    }
 
 
     private static String fileReader(String fileName) throws IOException {

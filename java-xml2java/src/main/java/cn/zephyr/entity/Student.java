@@ -1,8 +1,10 @@
 package cn.zephyr.entity;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement
+@XmlType(propOrder={"id","name","age"})
 public class Student {
     private Long id;
     private String name;
@@ -39,5 +41,14 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    public Student() {
+    }
+
+    public Student(Long id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
     }
 }
