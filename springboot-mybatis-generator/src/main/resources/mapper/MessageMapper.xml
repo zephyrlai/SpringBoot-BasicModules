@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zephyr.modular.entity.Message">
+  <resultMap id="BaseResultMap" type="cn.zephyr.modular.entity.Message">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="msg" jdbcType="VARCHAR" property="msg" />
+  </resultMap>
+  <insert id="insert" parameterType="cn.zephyr.modular.entity.Message">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into message (msg)
+    values (#{msg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zephyr.modular.entity.Message">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="msg != null">
+        msg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="msg != null">
+        #{msg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

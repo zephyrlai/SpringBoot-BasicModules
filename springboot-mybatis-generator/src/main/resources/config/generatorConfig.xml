@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+
+        <plugin type="cn.zephyr.namespace.NamespacePojoPlugin"/>
+        <plugin type="cn.zephyr.insertBatch.InsertBatchMapperPlugin"/>
+        <plugin type="cn.zephyr.mapper.MapperXmlExtPlugin"/>
+        <plugin type="cn.zephyr.xml.OverwriteXmlExtPlugin"/>
+
+        <commentGenerator>
+            <property name="suppressDate" value="true" />
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <!--JDBC Connection Configuration-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/dev-kit?useSSL=true"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="cn.zephyr.modular.entity"
+                            targetProject="springboot-mybatis-generator/src/main/java">
+                            <!-- 单独部署时，去掉模块名：targetProject="src/main/java">-->
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="springboot-mybatis-generator/src/main/resources">
+                         <!-- 单独部署时，去掉模块名：targetProject="src/main/resources">-->
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+
+        <table tableName="message" domainObjectName="Message"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="Mysql" type="post" identity="true" />
+        </table>
+
+    </context>
+</generatorConfiguration>
