@@ -3,7 +3,7 @@
 1. FreeMarker是一个用Java语言编写的模板引擎，它基于模板来生成文本输出。FreeMarker与Web容器无关，即在Web运行时，它并不知道Servlet或HTTP。它不仅可以用作表现层的实现技术，而且还可以用于生成XML，JSP或Java 等。  
 1. freemarker的功能：
     1. 根据模板问题动态渲染html文件（动态塞入后端提供的数据）
-    1. 根据模板生成各种格式的文件（生成实体文件）
+    1. 根据模板生成各种格式的文件（生成全新的实体文件）
 
 ### 二、使用Freemarker动态渲染html文件
 1. 搭建演示环境  
@@ -74,7 +74,7 @@
             return "freemarker/demo";
         }
         ```  
-        效果图： ![String类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-string.png)  
+        效果图：    ![String类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-string.png)  
     1. **对象类型**  
         Java代码：  
         新增Person类：  
@@ -82,6 +82,8 @@
         public class Person {
             private Integer id;
             private String name;
+            
+            (setter、getter、 ···)
         }
         ```
         FreemarkerController.java
@@ -99,7 +101,7 @@
             Hello World! --Name:${person.name}
         </body>
         ```
-         效果图：![对象类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-obj.png)  
+         效果图：   ![对象类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-obj.png)  
     1. **List类型**  
         Java代码：
         ``` java
@@ -123,7 +125,7 @@
             </#list>
         </body>
         ```
-        效果图：  ![List类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-list.png)  
+        效果图：   ![List类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-list.png)  
     1. **Map类型**：  
         Java代码：  
         ``` java
@@ -150,7 +152,7 @@
             </#list>
         </body>
         ```
-        效果图：![Map类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-map.png)  
+        效果图：    ![Map类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-map.png)  
     1. **时间格式**：  
         Java代码：  
         ``` java
@@ -167,7 +169,7 @@
         <h1>日期+时间：${date?datetime}</h1>
         <h1>自定义时间格式：${date?string("yyyy-MM/dd HH:mm:ss")}</h1>
         ```
-        效果图：  ![Date类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-date.png)  
+        效果图：   ![Date类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-date.png)  
     1. **null判断**  
         Java代码：
         ``` java
@@ -184,6 +186,7 @@
         <h1>null：${nullKey!}(相当于${nullKey!""})</h1>
         <h1>wasd：${wasd!"abcdefg"}</h1>
         ```
-        效果图：  ![Null类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-null.png)  
+        效果图：   ![Null类型](https://github.com/ZephyrLai/SpringBoot-BasicModules/raw/master/springboot-freemarker/src/main/resources/static/pic/fm-null.png)  
 
 ### 三、使用Freemarker生成实体文件
+1. 

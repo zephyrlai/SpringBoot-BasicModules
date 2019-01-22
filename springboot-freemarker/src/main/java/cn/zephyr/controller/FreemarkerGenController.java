@@ -40,7 +40,7 @@ public class FreemarkerGenController {
             // 2、创建数据集
             Map dataModel = new HashMap<>();
             dataModel.put("name", "haha");
-            // 3、创建输出文件的Writer对象。
+            // 3、创建输出文件的Writer对象（拼接实体文件的生成路径）。
             Writer out = new FileWriter(new File(fixFilePath(packageName)+fileName));
             // 4、调用模板对象的process方法，生成文件。
             template.process(dataModel, out);
