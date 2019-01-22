@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.zephyr.mapper.FincAdvanceMngDao" >
+
+    <resultMap id="BaseResultMap" type="cn.zephyr.entity.FincAdvanceMng" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+        <result column="department" property="department" jdbcType="VARCHAR" />
+        <result column="busi_date" property="busiDate" jdbcType="DATE" />
+        <result column="distributor_name" property="distributorName" jdbcType="VARCHAR" />
+        <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+        <result column="advance_amount" property="advanceAmount" jdbcType="DECIMAL" />
+        <result column="advance_type" property="advanceType" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, order_no, customer_name, department, busi_date, distributor_name, bank_name,
+        advance_amount, advance_type, remarks
+    </sql>
+
+    <select id="queryList"
+            resultMap="BaseResultMap"
+            parameterType="cn.zephyr.entity.FincAdvanceMng" >
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM FINC_ADVANCE_MNG
+    </select>
+
+</mapper>
