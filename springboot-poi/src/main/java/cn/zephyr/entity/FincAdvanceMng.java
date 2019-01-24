@@ -1,5 +1,7 @@
 package cn.zephyr.entity;
 
+import cn.zephyr.excelUtils.Excel;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -8,51 +10,61 @@ public class FincAdvanceMng {
     /**
      * 流水号
      */
+    @Excel(exportIndex = 0)
     private Integer id;
 
     /**
      * 订单编号
      */
+    @Excel(exportIndex = 1)
     private String orderNo;
 
     /**
      * 客户姓名
      */
+    @Excel(exportIndex = 2)
     private String customerName;
 
     /**
      * 部门
      */
+    @Excel(exportIndex = 3)
     private String department;
 
     /**
      * 业务日期
      */
+    @Excel(exportIndex = 4)
     private Date busiDate;
 
     /**
      * 车商名称
      */
+    @Excel(exportIndex = 5)
     private String distributorName;
 
     /**
      * 操作银行
      */
+    @Excel(exportIndex = 6)
     private String bankName;
 
     /**
      * 垫款金额（逾期金额）
      */
+    @Excel(exportIndex = 7)
     private BigDecimal advanceAmount;
 
     /**
      * 垫款类型
      */
+    @Excel(exportIndex = 8)
     private String advanceType;
 
     /**
      * 备注
      */
+    @Excel(exportIndex = 9)
     private String remarks;
 
     public Integer getRow() {
