@@ -19,4 +19,10 @@ public @interface Excel {
 
     // 导出用，导出时相对的列号
     int exportIndex() default -1;
+
+    String columnNum() default "";
+
+    String rowNum() default "";
+
+    FieldTypeEnum fieldType() default FieldTypeEnum.DEFAULT;
 }

@@ -3,6 +3,7 @@ package cn.zephyr;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @Auther: zephyrLai
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication(scanBasePackages = "cn.zephyr")
 @MapperScan(basePackages="cn.zephyr.mapper")
+@RequestMapping
 public class PoiApplication {
 
     public static void main(String[] args) {
