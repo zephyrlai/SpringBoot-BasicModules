@@ -1,6 +1,7 @@
 package cn.zephyr.excel;
 
 import cn.zephyr.PoiApplication;
+import cn.zephyr.entity.BasicInfo;
 import cn.zephyr.entity.FincAdvanceMng;
 import cn.zephyr.entity.StudentInfo;
 import cn.zephyr.excelUtils.ExcelExportAnalyse;
@@ -39,9 +40,17 @@ public class ComplicatedExcelExportTest {
         StudentInfo studentInfo1 = new StudentInfo();
         StudentInfo studentInfo2 = new StudentInfo();
         StudentInfo studentInfo3 = new StudentInfo();
+        BasicInfo basicInfo = new BasicInfo();
+        basicInfo.setAge(21);
+        basicInfo.setGender("F");
+        basicInfo.setHometown("浙江");
+        basicInfo.setName("张三");
         studentInfo1.setId("123");
+        studentInfo1.setBasicInfo(basicInfo);
         studentInfo2.setId("456");
+        studentInfo2.setBasicInfo(basicInfo);
         studentInfo3.setId("789");
+        studentInfo3.setBasicInfo(basicInfo);
         List<StudentInfo> stuList = new ArrayList<>();
         stuList.add(studentInfo1);
         stuList.add(studentInfo2);

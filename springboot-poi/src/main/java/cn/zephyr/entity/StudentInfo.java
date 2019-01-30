@@ -13,6 +13,6 @@ import lombok.Data;
 public class StudentInfo {
     @Excel(columnNum = "0-0", rowNum = "1-4")
     private String id;
-//    @Excel(columnNum = "1-1", rowNum = "", fieldType = FieldTypeEnum.OBJ)
+    @Excel(columnNum = "1-1", rowNum = "", fieldType = FieldTypeEnum.OBJ)
     private BasicInfo basicInfo;
 }

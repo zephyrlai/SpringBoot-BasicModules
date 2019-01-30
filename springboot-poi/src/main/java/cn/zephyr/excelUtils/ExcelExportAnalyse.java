@@ -165,22 +165,39 @@ public class ExcelExportAnalyse {
         Workbook wb = new XSSFWorkbook(inputStream);    // 获取导出模板工作簿
         Sheet sheet = wb.getSheetAt(sheetNum);          // 获取导出数据即将写入的sheet页
         File resultFile ;
-        Map<String, AnalyseData> analyseDataMap = antiAnalysisComplicated(clazz);
         // 数据重组：单元格横纵坐标——数据实体
-        List<Map<String, Object>> analyseData = antiAnalysisDataComplicated(analyseDataMap, dataList);
+        List<Map<String, Object>> analyseData  = antiAnalysisComplicated(clazz,dataList);
         // 如果解析出了有效数据，则写入Excel文件
+        // todo 每组元数据的行数要能动态调整
         if(!CollectionUtils.isEmpty(analyseData)){
+            Integer currentRowNum = 0 ;// 当前单元格所在的行号
+            Integer baseDataRowIndex = -4; // 当前数据实体所在的行
+            Row row ;
+            // 行数据写入
             for (int i = 0; i < analyseData.size(); i++) {
                 Map<String, Object> map = analyseData.get(i);
-                Integer currentRowNum = i*4 + startRow ; // todo 每组元数据的行数要能动态调整
+                // todo 每组元数据的行数要能动态调整
+                baseDataRowIndex +=4;
+                for (int j = 1; j <= 4; j++) {
+                    row = sheet.createRow(baseDataRowIndex+j);
+                }
+                // 列数据写入
                 for (Map.Entry<String, Object> entry : map.entrySet()) {
                     String[] cellSize = entry.getKey().split("\\+");
-                    String[] cellColumnSize = cellSize[0].split("-");
-                    String[] cellRowSize = cellSize[1].split("-");
-                    CellRangeAddress region =
-                            new CellRangeAddress(new Integer(cellRowSize[0])+currentRowNum, new Integer(cellRowSize[1])+currentRowNum, new Integer(cellColumnSize[0]), new Integer(cellColumnSize[1]));
-                    sheet.addMergedRegion(region);
-                    Row row = sheet.createRow(currentRowNum + new Integer(cellRowSize[0]));
+                    String[] cellRowSize = cellSize[0].split("-");
+                    String[] cellColumnSize = cellSize[1].split("-");
+                    currentRowNum = baseDataRowIndex + new Integer(cellRowSize[0]);
+                    Integer rowNumStart = baseDataRowIndex + new Integer(cellRowSize[0]);
+                    Integer rowNumEnd = baseDataRowIndex + new Integer(cellRowSize[1]);
+                    Integer columnNumStart = new Integer(cellColumnSize[0]) ;
+                    Integer columnNumEnd = new Integer(cellColumnSize[1]) ;
+                    row = sheet.getRow(currentRowNum);
+                    if(!rowNumStart.equals(rowNumEnd)){
+                        CellRangeAddress region =
+                                new CellRangeAddress(rowNumStart, rowNumEnd, columnNumStart,columnNumEnd);
+                        sheet.addMergedRegion(region);
+                    }
+
                     if(entry.getValue() == null ){
                         continue;
                     }/*else if(entry.getValue().getClass().getName().contains("Date")){
@@ -209,7 +226,7 @@ public class ExcelExportAnalyse {
      * @description  如果属性的数据类型是一个对象或者List/数组，则下方法包括了对这些类型数据的处理
      * 注意：@Excel注解的columnNum与rowNum不能同时为空
      */
-    private static Map<String, AnalyseData> antiAnalysisComplicated(Class<?> clazz) throws Exception{
+    private static <T> List<Map<String, Object>> antiAnalysisComplicated(Class<?> clazz, List<T> dataList) throws Exception{
         Field[] fields = clazz.getDeclaredFields();
         String fieldName;
         String getMethod;
@@ -217,7 +234,10 @@ public class ExcelExportAnalyse {
         Class<?> returnType ;
         // key-index(excel的单元格坐标),value-method(属性对应的getter方法)
         Map<String, AnalyseData> singleLineDataMap = new HashMap<>();
+        // 最终返回的数据集
+        Map<String, Object> finalDataMap ;
         String cellSizeInfo;
+        // todo 用递归处理
         for (Field field : fields) {
             if (field.isAnnotationPresent(Excel.class)) {
                 Excel excel = field.getAnnotation(Excel.class);
@@ -226,9 +246,31 @@ public class ExcelExportAnalyse {
                 }else if(excel.fieldType().equals(FieldTypeEnum.LIST)){// todo 针对List类型属性的处理
                     cellSizeInfo="";
                 }else if(excel.fieldType().equals(FieldTypeEnum.OBJ)){// todo 针对对象类型属性的处理
-                    cellSizeInfo="";
-                }else{// todo 针对默认类型（基本数据类型包括包装类型）的数据
-                    cellSizeInfo = excel.columnNum() + "+" +  excel.rowNum();
+                    Class<?> subClass = field.getType();
+                    Field[] subClassDeclaredFields = subClass.getDeclaredFields();
+                    if(null == subClassDeclaredFields || subClassDeclaredFields.length == 0){
+                        continue;
+                    }
+                    for (Field subField : subClassDeclaredFields) {
+                        if(subField.isAnnotationPresent(Excel.class)){
+                            Excel subExcel = subField.getAnnotation(Excel.class);
+                            if(StringUtils.isEmpty(excel.columnNum()) && StringUtils.isEmpty(excel.rowNum())){
+                                continue;
+                            }else{// 针对默认类型（基本数据类型包括包装类型）的数据
+                                cellSizeInfo = subExcel.rowNum() + "+" +  subExcel.columnNum();
+                                fieldName = subField.getName();
+                                getMethod = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                                String getPreMethod = "get" + field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
+                                returnType = subField.getType();
+                                Method preMethod = clazz.getMethod(getPreMethod);
+                                method = subClass.getMethod(getMethod);
+                                singleLineDataMap.put(cellSizeInfo, new AnalyseData(method,preMethod, returnType));
+                            }
+                        }
+
+                    }
+                }else{// 针对默认类型（基本数据类型包括包装类型）的数据
+                    cellSizeInfo = excel.rowNum() + "+" + excel.columnNum() ;
                     fieldName = field.getName();
                     getMethod = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
                     returnType = field.getType();
@@ -237,22 +279,46 @@ public class ExcelExportAnalyse {
                 }
             }
         }
-        return singleLineDataMap;
-    }
-
-    private static <T> List<Map<String, Object>> antiAnalysisDataComplicated(Map<String, AnalyseData> analysisDataMap, List<T> dataList) throws Exception {
-        Map<String, Object> finalDataMap ;
+//        singleLineDataMap = sortMapByKey(singleLineDataMap);
         List<Map<String, Object>> resultDataList = new ArrayList<>();
         if(!CollectionUtils.isEmpty(dataList)){
             for (T t : dataList) {
                 finalDataMap = new HashMap<>();
-                for (Map.Entry<String, AnalyseData> dataEntry : analysisDataMap.entrySet()) {
-                    finalDataMap.put(dataEntry.getKey(), dataEntry.getValue().getMethod().invoke(t));
+                for (Map.Entry<String, AnalyseData> dataEntry : singleLineDataMap.entrySet()) {
+                    if(null != dataEntry.getValue().getPreMethod()){
+                        finalDataMap.put(dataEntry.getKey(), dataEntry.getValue().getMethod().invoke(dataEntry.getValue().getPreMethod().invoke(t)));
+                    }else
+                        finalDataMap.put(dataEntry.getKey(), dataEntry.getValue().getMethod().invoke(t));
                 }
+//                finalDataMap = sortMapByKey(finalDataMap);
                 resultDataList.add(finalDataMap);
             }
         }
+
         return resultDataList;
     }
 
+    public static Map<String, Object> sortMapByKey(Map<String, Object> map) {
+        if (map == null || map.isEmpty()) {
+            return null;
+        }
+
+        Map<String, Object> sortMap = new TreeMap<String, Object>(
+                new MapKeyComparator());
+
+        sortMap.putAll(map);
+
+        return sortMap;
+    }
+
+}
+
+class MapKeyComparator implements Comparator<String>{
+
+    @Override
+    public int compare(String str1, String str2) {
+        String s1 = str1.split("\\+")[0].split("-")[0];
+        String s2 = str2.split("\\+")[0].split("-")[0];
+        return new Integer(s1).compareTo(new Integer(s2));
+    }
 }
