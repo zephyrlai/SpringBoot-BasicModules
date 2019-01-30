@@ -154,59 +154,62 @@ public class ExcelExportAnalyse {
      * @param clazz
      * @param dataList
      * @param sheetNum
-     * @param startRow
      * @param inputStream
      * @param <T>
      * @return
      * @throws Exception
-     * @description 小坑：先创建合并单元格实体，再将单元格实体添加到Sheet对象，最后再创建Row对象（黑人问号脸？？）
+     * @description
      */
-    public static <T> File generateComplicatedExportExcel(Class<T> clazz, List<T> dataList, Integer sheetNum, Integer startRow,InputStream inputStream) throws Exception {
+    public static <T> File generateComplicatedExportExcel(Class<T> clazz, List<T> dataList, Integer sheetNum,InputStream inputStream,Integer dataSize) throws Exception {
         Workbook wb = new XSSFWorkbook(inputStream);    // 获取导出模板工作簿
         Sheet sheet = wb.getSheetAt(sheetNum);          // 获取导出数据即将写入的sheet页
         File resultFile ;
         // 数据重组：单元格横纵坐标——数据实体
         List<Map<String, Object>> analyseData  = antiAnalysisComplicated(clazz,dataList);
         // 如果解析出了有效数据，则写入Excel文件
-        // todo 每组元数据的行数要能动态调整
         if(!CollectionUtils.isEmpty(analyseData)){
-            Integer currentRowNum = 0 ;// 当前单元格所在的行号
-            Integer baseDataRowIndex = -4; // 当前数据实体所在的行
+            Integer currentRowNum ;// 当前单元格所在的行号
+            Integer baseDataRowIndex = 0-dataSize; // 当前数据实体所在的行
             Row row ;
+            String[] cellSize ;
+            String[] cellRowSize ;
+            String[] cellColumnSize ;
+            Integer rowNumStart ;
+            Integer rowNumEnd ;
+            Integer columnNumStart ;
+            Integer columnNumEnd ;
+            CellRangeAddress region ;   // 合并单元格的poi对象
             // 行数据写入
             for (int i = 0; i < analyseData.size(); i++) {
                 Map<String, Object> map = analyseData.get(i);
-                // todo 每组元数据的行数要能动态调整
-                baseDataRowIndex +=4;
-                for (int j = 1; j <= 4; j++) {
+                baseDataRowIndex +=dataSize;
+                // 首先创建单条数据所占用的所有行
+                for (int j = 1; j <= dataSize; j++) {
                     row = sheet.createRow(baseDataRowIndex+j);
                 }
                 // 列数据写入
                 for (Map.Entry<String, Object> entry : map.entrySet()) {
-                    String[] cellSize = entry.getKey().split("\\+");
-                    String[] cellRowSize = cellSize[0].split("-");
-                    String[] cellColumnSize = cellSize[1].split("-");
+                    cellSize = entry.getKey().split("\\+");
+                    cellRowSize = cellSize[0].split("-");
+                    cellColumnSize = cellSize[1].split("-");
                     currentRowNum = baseDataRowIndex + new Integer(cellRowSize[0]);
-                    Integer rowNumStart = baseDataRowIndex + new Integer(cellRowSize[0]);
-                    Integer rowNumEnd = baseDataRowIndex + new Integer(cellRowSize[1]);
-                    Integer columnNumStart = new Integer(cellColumnSize[0]) ;
-                    Integer columnNumEnd = new Integer(cellColumnSize[1]) ;
+                    rowNumStart = baseDataRowIndex + new Integer(cellRowSize[0]);
+                    rowNumEnd = baseDataRowIndex + new Integer(cellRowSize[1]);
+                    columnNumStart = new Integer(cellColumnSize[0]) ;
+                    columnNumEnd = new Integer(cellColumnSize[1]) ;
                     row = sheet.getRow(currentRowNum);
+                    // 如果需要创建合并单元格，则创建
                     if(!rowNumStart.equals(rowNumEnd)){
-                        CellRangeAddress region =
-                                new CellRangeAddress(rowNumStart, rowNumEnd, columnNumStart,columnNumEnd);
+                        region = new CellRangeAddress(rowNumStart, rowNumEnd, columnNumStart,columnNumEnd);
                         sheet.addMergedRegion(region);
                     }
-
                     if(entry.getValue() == null ){
-                        continue;
-                    }/*else if(entry.getValue().getClass().getName().contains("Date")){
-                        row.createCell(entry.getKey()).setCellValue(DateUtil.dateFormatTime((Date)entry.getValue(),DateUtil.DateMode_12));
+                        // do nothing,next loop
+                    }else if(entry.getValue().getClass().getName().contains("Date")){
+                        row.createCell(new Integer(cellColumnSize[0])).setCellValue(DateUtil.dateFormatTime((Date)entry.getValue(),DateUtil.DateMode_12));
                     }else if(entry.getValue().getClass().getName().contains("BigDecimal")){
-                        row.createCell(entry.getKey()).setCellValue((entry.getValue()).toString());
-                    }else if(entry.getValue().getClass().getName().contains("List")){
-
-                    }*/else{
+                        row.createCell(new Integer(cellColumnSize[0])).setCellValue((entry.getValue()).toString());
+                    }else{
                         row.createCell(new Integer(cellColumnSize[0])).setCellValue(String.valueOf(entry.getValue()));
                     }
                 }

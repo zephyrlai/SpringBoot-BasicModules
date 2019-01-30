@@ -56,7 +56,7 @@ public class ComplicatedExcelExportTest {
         stuList.add(studentInfo2);
         stuList.add(studentInfo3);
         Resource resource = new ClassPathResource(EXCEL_EXPORT_TEMPLATE);   // 定位导出模板
-        File file = ExcelExportAnalyse.generateComplicatedExportExcel(StudentInfo.class, stuList, 0, 1, resource.getInputStream());
+        File file = ExcelExportAnalyse.generateComplicatedExportExcel(StudentInfo.class, stuList, 0, resource.getInputStream(),4);
         FileUtils.copyFile(file,new File("D://1111111.xlsx"));
     }
 }
